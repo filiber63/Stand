@@ -13,9 +13,10 @@ public class BracketDS implements IBracket {
     private static final Logger logger = LogManager.getLogger(); //Логгер
 
     /** КОНСТРУКТОР */
-    public BracketDS(IFiles iFiles){
+    public BracketDS(IFiles iFiles) {
+        String s = iFiles.getAppProperties().getProperty("com1");
         // Создаем порт
-        bracketPort = new SerialPort(iFiles.getAppProperties().getProperty("com1"));
+        bracketPort = new SerialPort(s);
         try {
             // Открываем порт
             bracketPort.openPort();
@@ -46,19 +47,22 @@ public class BracketDS implements IBracket {
 
     /** ДВИЖЕНИЕ КРОНШТЕЙНА ВВЕРХ */
     @Override
-    public void bracketUp(){
-
+    public void bracketUp(int bracketNum){
+        byte[] bytes ={(byte) 0xFF, (byte) bracketNum, 0x00, 0x04, 0x27, 0x00, 44};
+        sendBytes(bracketPort, bytes);
     }
 
     /** ДВИЖЕНИЕ КРОНШТЕЙНА ВНИЗ */
     @Override
-    public void bracketDown(){
-
+    public void bracketDown(int bracketNum){
+        byte[] bytes ={(byte) 0xFF, (byte) bracketNum, 0x00, 0x02, 0x27, 0x00, 42};
+        sendBytes(bracketPort, bytes);
     }
 
     /** ОСТАНОВКА КРОНШТЕЙНА */
     @Override
-    public void bracketStop(){
-
+    public void bracketStop(int bracketNum){
+        byte[] bytes ={(byte) 0xFF, (byte) bracketNum, 0x00, 0x00, 0x00, 0x00, 1};
+        sendBytes(bracketPort, bytes);
     }
 }

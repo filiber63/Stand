@@ -12,7 +12,7 @@ import java.util.Properties;
 
 /** КЛАСС РАБОТЫ С ФАЙЛАМИ */
 public class FilesDS implements IFiles {
-    private final String currentPath;     //Корневой путь приложения
+//    private final String currentPath;     //Корневой путь приложения
     private final String settingsPath;    //Каталог установок приложения
     private final Properties properties;  // Параметры приложения
     private static final Logger logger = LogManager.getLogger(); //Логгер
@@ -27,7 +27,7 @@ public class FilesDS implements IFiles {
             currentPath = null;
             logger.error("Ошибка получения базового каталога: "+e);
         }
-        this.currentPath = currentPath;
+//        this.currentPath = currentPath;
         this.settingsPath = currentPath+"\\app_settings\\";
         this.properties = getProperties(propFileName);
     }
